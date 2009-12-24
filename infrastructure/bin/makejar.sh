@@ -20,7 +20,24 @@ else
     echo "using JAR $JAR..."
 fi
 
-cp ${POSTGRESQL_CONNECTOR_JAR} lib/
+if [ -z "$DB_ADAPTER" ]; then
+  echo "Please define DB_ADAPTER in your environment"
+  echo "(currently supported adapters: mysql and postgresql)"
+  exit 1
+fi
+
+CONNECTOR_JAR="`echo ${DB_ADAPTER} | tr a-z A-Z`_CONNECTOR_JAR"
+CONNECTOR_JAR="${!CONNECTOR_JAR}"
+
+if [ ! -f "$CONNECTOR_JAR" ]; then
+  echo "Connector JAR file $CONNECTOR_JAR not found"
+  exit 1
+else
+  echo "DB: Using $DB_ADAPTER adapter"
+  echo "DB: Using $CONNECTOR_JAR connector"
+fi
+
+cp $CONNECTOR_JAR lib/
 
 source bin/compilecache.sh
 
