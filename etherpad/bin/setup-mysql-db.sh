@@ -14,17 +14,24 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-if [ `whoami` != "root" ]; then
-  echo "Must run as root, i.e., sudo $0"
-  exit 1
-fi
-
+user="etherpad"
+host="localhost"
+password="etherpad"
 db="etherpad"
 
-echo "Creating etherpad ${db}..."
-echo "create database ${db};" | ${mysql} -u root
+mysql="mysql"
+
+case $#
+  0) mysql="$mysql -u root" ;;
+  1) mysql="$mysql -u root -p$1" ;;
+  2) mysql="$mysql -u $1 -p$2" ;;
+  *) echo "Usage: $0 [user] [password]"; exit 1 ;;
+esac
+
+echo "Creating database '${db}'..."
+echo "CREATE DATABASE ${db};" | ${mysql}
 
 echo "Granting priviliges..."
-echo "grant all privileges on ${db}.* to 'etherpad'@'localhost' identified by 'password';" | ${mysql} -u root
+echo "GRANT ALL PRIVILEGES ON ${db}.* TO '$user'@'$host' IDENTIFIED BY '$password';" | ${mysql}
 
 echo "Success"
