@@ -8,5 +8,7 @@
 /etherpad/appjet-eth*.jar
 /etherpad/etherpad-pne-*.jar
 
+/etherpad/etc/*.properties
+
 /infrastructure/lib/mysql-*
 /infrastructure/lib/postgresql-*
