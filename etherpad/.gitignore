@@ -1,9 +1,0 @@
-data/
-build
-derby.log
-local
-*.swp
-appjet-eth*.jar
-etherpad-pne-*.jar
-
-

@@ -1,2 +1,12 @@
 # vim swap
 .*.sw?
+
+/etherpad/data/
+/etherpad/build
+/etherpad/derby.log
+/etherpad/local
+/etherpad/appjet-eth*.jar
+/etherpad/etherpad-pne-*.jar
+
+/infrastructure/lib/mysql-*
+/infrastructure/lib/postgresql-*
