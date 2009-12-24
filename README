@@ -1,23 +1,59 @@
-== Madriska's PostgreSQL Etherpad Forktacular
+== vjt's Etherpad Playground
 
-This is the super-experimental PostgreSQL fork of Etherpad. Instructions:
+Based on Madriska's PostgreSQL Etherpad Forktacular, which is based on
+the etherpad open source code released by Google, Inc.
+
+== Etherpad? What is this stuff about?
+
+EtherPad is a web-based realtime collaborative document editor, whose
+original home page is at http://code.google.com/p/etherpad
+
+This is a super-experimental fork of Etherpad that adds PostgreSQL database
+support while retaining upstream MySQL capabilities. Instructions:
 
 1. Grab the code.
 
-    git clone git://github.com/madriska/etherpad.git
+    git clone git://github.com/vjt/etherpad.git
 
-2. Set up your JDK, Scala, and environment variables (except the MySQL stuff) per this doc: 
+2. Set up your JDK and Scala environment per this doc:
 
     http://code.google.com/p/etherpad/wiki/Instructions
 
-3. Download the PostgreSQL JDBC adapter (jdbc.postgresql.org) and point the jar packager to its path:
+3a. If you run Mac OS X 10.6 with MacPorts 1.8.0, edit the build environment
+    with your desired database adapter and source it into your shell env:
 
-    export POSTGRESQL_CONNECTOR_JAR=path/to/postgresql-8.4-701.jdbc4.jar
+    vim etherpad/bin/macosx-build-environment.sh    # edit
+    source etherpad/bin/macosx-build-environment.sh # load
 
-4. cd to etherpad; set up your database. This should probably be done manually but there's a big candy button for it:
+3b. If you run another operating system, fork this repository, add another
+    build environment file for your system, and send me a pull request :-)
+
+4. Download either the PostgreSQL JDBC adapter (jdbc.postgresql.org) *or*
+   the MySQL one (dev.mysql.com/downloads/connector/j/) and set the appropriate
+   variables in the build environment file
+
+5. Copy the example config file and set it up for your database:
+
+    cd etherpad/etc
+    cp etherpad.localdev-default.properties.example etherpad.localdev-default.properties
+    vim etherpad.localdev-default.properties
+    cd -
+
+6. cd to etherpad; set up your database. You should really do this manually, but there's
+   a big candy button for it:
 
     cd etherpad/
+
+    # if you use PostgreSQL
     sudo -u postgres bin/setup-postgresql-db.sh
+
+    # if you use MySQL
+    bin/setup-mysql-db.sh
+
+    # you can pass root user and passwd as well
+    # bin/setup/mysql-db.sh user password
+
+    cd -
 
 5. Compile the jar and start the server:
 
@@ -26,18 +62,8 @@ This is the super-experimental PostgreSQL fork of Etherpad. Instructions:
 
 6. And you're done. Visit http://localhost:9000/ and start playing around.
 
-
-== Plain-Old-Etherpad README
-
-EtherPad is a web-based realtime collaborative document editor.
-
-EtherPad currently lives at http://code.google.com/p/etherpad
-
-For instructions to build and run EtherPad, see: http://code.google.com/p/etherpad/wiki/Instructions
-
 This distribution includes some code written by other organizations. 
 The rest is Copyright 2007-2009 Google Inc. and licensed under the Apache License 2.0.
-
 >>>>>>>>>>>>>>
 Apache Commons Lang
 Copyright 2001-2008 The Apache Software Foundation
